@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CST8237-Work", "CST8237-Work\CST8237-Work.vcxproj", "{8426037B-23D6-4CAC-BDA2-368A24F5716D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CST8237-Game", "CST8237-Game\CST8237-Game.vcxproj", "{C5974FED-13B6-420F-86A9-551450D636B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8426037B-23D6-4CAC-BDA2-368A24F5716D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8426037B-23D6-4CAC-BDA2-368A24F5716D}.Debug|Win32.Build.0 = Debug|Win32
+		{8426037B-23D6-4CAC-BDA2-368A24F5716D}.Release|Win32.ActiveCfg = Release|Win32
+		{8426037B-23D6-4CAC-BDA2-368A24F5716D}.Release|Win32.Build.0 = Release|Win32
+		{C5974FED-13B6-420F-86A9-551450D636B1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C5974FED-13B6-420F-86A9-551450D636B1}.Debug|Win32.Build.0 = Debug|Win32
+		{C5974FED-13B6-420F-86A9-551450D636B1}.Release|Win32.ActiveCfg = Release|Win32
+		{C5974FED-13B6-420F-86A9-551450D636B1}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

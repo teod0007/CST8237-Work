@@ -1,0 +1,33 @@
+﻿Build started 2015-01-20 9:33:10 PM.
+     1>Project "C:\Users\Emanuel\Desktop\College\Game Programming\C++ Projects\CST8237-Work\CST8237-Game\CST8237-Game.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp GameEngine.cpp Player.cpp main.cpp
+         main.cpp
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.h(39): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.h(39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+         Player.cpp
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\player.cpp(27): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         GameEngine.cpp
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.h(39): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.h(39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(36): error C2065: 'ship' : undeclared identifier
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(37): error C2065: 'ship' : undeclared identifier
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(37): error C2227: left of '->Initialize' must point to class/struct/union/generic type
+                 type is ''unknown-type''
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(40): warning C4244: '=' : conversion from 'Uint32' to 'float', possible loss of data
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(57): warning C4244: '=' : conversion from 'Uint32' to 'float', possible loss of data
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(90): error C2065: 'ship' : undeclared identifier
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(90): error C2227: left of '->Update' must point to class/struct/union/generic type
+                 type is ''unknown-type''
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(91): error C2065: 'ship' : undeclared identifier
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.cpp(91): error C2227: left of '->Draw' must point to class/struct/union/generic type
+                 type is ''unknown-type''
+         Game.cpp
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.h(39): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\emanuel\desktop\college\game programming\c++ projects\cst8237-work\cst8237-game\gameengine.h(39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+         Generating Code...
+     1>Done Building Project "C:\Users\Emanuel\Desktop\College\Game Programming\C++ Projects\CST8237-Work\CST8237-Game\CST8237-Game.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.82
