@@ -11,6 +11,7 @@
 // at compile time to define this class.
 struct SDL_Renderer;
 struct SDL_Window;
+class Player;
 
 class GameEngine
 {

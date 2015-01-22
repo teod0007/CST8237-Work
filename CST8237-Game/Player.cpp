@@ -5,7 +5,7 @@
 
 struct SDL_Renderer;
 
-Player::Player(){}
+Player::Player():GameObject(){}
 
 void Player::Initialize()
 {
