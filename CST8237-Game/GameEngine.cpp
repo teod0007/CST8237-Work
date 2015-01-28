@@ -4,6 +4,11 @@
 #include <math.h>
 #include "MathUtils.h"
 #include "Player.h"
+#include "Asteroid.h"
+#include "Projectile.h"
+#include <string>
+
+
 GameEngine::GameEngine()
 {
 
@@ -22,23 +27,37 @@ void GameEngine::Initialize()
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     640, 640,
     SDL_WINDOW_SHOWN);
+  //SDL_SetWindowTitle(window,"");
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
   // Using the default member-wise initializer for our new struct.
-  pos.x = 100.0f;
-  pos.y = 100.0f;
-  endPointOffset.x = 10.0f;
-  endPointOffset.y = 0.0f;
-  speed = 10.0f;
-  rotationSpeed = 360.0f;
+  
+  _asteroids = new Asteroid*[10];
+  for(int i = 0; i < 10; i++)
+  {
+		  _asteroids[i] = nullptr;
+  }
+  _projectiles = new Projectile*[10];
+  for(int i = 0; i < 10; i++)
+  {
+		  _projectiles[i] = nullptr;
+  }
+  _ship = new Player();
+  _ship->Initialize();
 
-  ship = new Player();
-  ship->Initialize();
+  _lives = 3;
+  _points = 0;
+
+  std::string title = "Awesome Game ---- Lives: "+std::to_string (_lives)+"Points: "+std::to_string (_points);
+
+  SDL_SetWindowTitle(window,title.c_str());
+
   /* Get the time at the beginning of our game loop so that we can track the
   * elapsed difference. */
-  oldTime = SDL_GetTicks();
-  currentTime = oldTime;
+  _oldTime = SDL_GetTicks();
+  _currentTime = _oldTime;
+  _accumulatedTime = _oldTime;
 }
 
 void GameEngine::Shutdown()
@@ -53,9 +72,10 @@ void GameEngine::Update()
   SDL_PollEvent(&evt);
 
   // Calculating the time difference since our last loop.
-  oldTime = currentTime;
-  currentTime = SDL_GetTicks();
-  deltaTime = (currentTime - oldTime) / 1000;
+  _oldTime = _currentTime;
+  _currentTime = SDL_GetTicks();
+  _deltaTime = (_currentTime - _oldTime) / 1000;
+  
 
   // Check for user input.
   if (evt.type == SDL_KEYDOWN)
@@ -65,10 +85,26 @@ void GameEngine::Update()
     switch (keyCode)
     {
     case SDLK_UP:
-      pos.y -= (speed * deltaTime);
+	  _ship->Move(FORWARD);
       break;
     case SDLK_DOWN:
-      pos.y += (speed * deltaTime);
+	  _ship->Move(BACKWARD);
+      break;
+	case SDLK_RIGHT:
+	  _ship->Turn(RIGHT);
+      break;
+    case SDLK_LEFT:
+      _ship->Turn(LEFT);
+      break;
+	case SDLK_SPACE:
+      for(int i = 0; i < 10; i++)
+		  if(_projectiles[i] == nullptr)
+		  {
+			  _projectiles[i] = new Projectile(_ship->GetTransform());
+			  _projectiles[i]->Initialize();
+			  break;
+			  
+		  }
       break;
     default:
       break;
@@ -87,8 +123,101 @@ void GameEngine::Draw()
   // Set the draw colour for our point.
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
-  ship->Update(0);
-  ship->Draw(renderer,0);
+  _ship->Update(_deltaTime);
+  _ship->Draw(renderer,_deltaTime);
+  if(static_cast<int>(_accumulatedTime)%6 >=4)
+  {
+	  for(int i = 0; i < 10; i++)
+	  {
+		  if(_asteroids[i]== nullptr)
+		  {
+				_asteroids[i] = new Asteroid();
+				_asteroids[i]->Initialize();
+				break;
+		  }
+	  }
+	  _accumulatedTime = 0;
+  }
+  _accumulatedTime+=_deltaTime;
+  for(int i = 0; i < 10; i++)
+  {
+	if(_asteroids[i] != nullptr)
+	{
+		_asteroids[i]->Update(_deltaTime);
+		_asteroids[i]->Draw(renderer,_deltaTime);
+	}
+  }
+
+  for(int i = 0; i < 10; i++)
+  {
+	if(_projectiles[i] != nullptr)
+	{
+		_projectiles[i]->Update(_deltaTime);
+		_projectiles[i]->Draw(renderer,_deltaTime);
+		if(_projectiles[i]->GetMaxTime()>3)
+		{
+			delete _projectiles[i];
+			_projectiles[i]=nullptr;
+		}
+	}
+  }
+
+  for(int i = 0; i < 10; i++)
+  {
+		if(_asteroids[i] != nullptr)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				if(_projectiles[j] != nullptr)
+				{
+					if(static_cast<int>(_projectiles[j]->GetPosition().x-_asteroids[i]->GetPosition().x)<=9 && static_cast<int>(_projectiles[j]->GetPosition().x-_asteroids[i]->GetPosition().x)>=-9 && static_cast<int>(+_projectiles[j]->GetPosition().y-_asteroids[i]->GetPosition().y)<=9 && static_cast<int>(+_projectiles[j]->GetPosition().y-_asteroids[i]->GetPosition().y)>=-9)
+					{
+						delete _asteroids[i];
+						delete _projectiles[j];
+						_asteroids[i] = nullptr; 
+						_projectiles[j] = nullptr;
+						_points++;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+  for(int i = 0; i < 10; i++)
+  {
+		if(_asteroids[i] != nullptr)
+		{
+			if(static_cast<int>(_ship->GetPosition().x-_asteroids[i]->GetPosition().x)<=9 && static_cast<int>(_ship->GetPosition().x-_asteroids[i]->GetPosition().x)>=-9 && static_cast<int>(+_ship->GetPosition().y-_asteroids[i]->GetPosition().y)<=9 && static_cast<int>(+_ship->GetPosition().y-_asteroids[i]->GetPosition().y)>=-9)
+					{
+						if(_lives == 0)
+						{
+							delete _ship;
+							for(int j = 0; j < 10; j++)
+							{
+								delete _asteroids[j];
+								_asteroids[j] = nullptr;
+							
+							}
+							_ship = new Player(); 
+							_ship->Initialize();
+							_lives = 3;
+							_points = 0;
+							break;
+						}else
+						{
+							delete _asteroids[i];
+							_asteroids[i] = nullptr;
+							_lives--;
+							break;
+						}
+					}
+		}
+  }
+
+ std::string title = "Awesome Game ---- Lives: "+std::to_string (_lives)+" Points: "+std::to_string (_points);
+
+  SDL_SetWindowTitle(window,title.c_str());
   // Draw the point.
   //SDL_RenderDrawPoint(renderer, posX, posY);
 

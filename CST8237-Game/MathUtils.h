@@ -1,5 +1,9 @@
 #pragma once
 
+
+enum Direction {RIGHT,LEFT};
+enum Acceleration {FORWARD,BACKWARD,NONE};
+enum VectorAxis {X,Y};
 // A structure to hold two floats. Similar to SDL_Point (though it contains ints).
 struct Vector2
 {
@@ -24,9 +28,9 @@ struct Vector4
 
 struct Transform
 {
-  Vector3 position;
+  Vector2 position;
   Vector3 rotation;
-  Vector3 scale;
+  Vector2 scale;
 };
 
 class MathUtils
@@ -34,4 +38,7 @@ class MathUtils
 public:
   static float ToRadians(float degrees);
   static float ToDegrees(float radians);
+  static Vector2 Rotate(Vector2&,Vector3&, Direction d);
+  static float AtanF(float x, float y);
+  static float VectorDecomposition(float acceleration, float radians,VectorAxis a);
 };

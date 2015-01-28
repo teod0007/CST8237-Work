@@ -11,7 +11,10 @@
 // at compile time to define this class.
 struct SDL_Renderer;
 struct SDL_Window;
+class Projectile;
 class Player;
+class Asteroid;
+
 
 class GameEngine
 {
@@ -35,10 +38,9 @@ protected:
   SDL_Renderer *renderer;
 
   // Using the default member-wise initializer for our new struct.
-  Vector2 pos;
-  Vector2 endPointOffset;
-  Player *ship;
-  float oldTime, currentTime, deltaTime;
-  float speed;
-  float rotationSpeed;
+  Player *_ship;
+  Asteroid **_asteroids;
+  Projectile **_projectiles;
+  float _oldTime, _currentTime, _deltaTime, _accumulatedTime;
+  int _lives,_points;
 };

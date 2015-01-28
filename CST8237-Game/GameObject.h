@@ -4,6 +4,7 @@
 
 struct SDL_Renderer;
 
+
 class GameObject
 {
 public:
