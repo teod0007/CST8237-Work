@@ -66,7 +66,7 @@ void GameEngine::Shutdown()
   SDL_DestroyWindow(window);
 }
 
-void GameEngine::Update()
+bool GameEngine::Update()
 {
   SDL_Event evt;
   SDL_PollEvent(&evt);
@@ -76,10 +76,14 @@ void GameEngine::Update()
   _currentTime = SDL_GetTicks();
   _deltaTime = (_currentTime - _oldTime) / 1000;
   
-
+  if (evt.type == SDL_QUIT)
+  {
+	return false;
+  }
   // Check for user input.
   if (evt.type == SDL_KEYDOWN)
   {
+
     SDL_KeyboardEvent &keyboardEvt = evt.key;
     SDL_Keycode &keyCode = keyboardEvt.keysym.sym;
     switch (keyCode)
@@ -100,7 +104,7 @@ void GameEngine::Update()
       for(int i = 0; i < 10; i++)
 		  if(_projectiles[i] == nullptr)
 		  {
-			  _projectiles[i] = new Projectile(_ship->GetTransform());
+			  _projectiles[i] = new Projectile(_ship->GetTransform()); //add a new projectile to the list
 			  _projectiles[i]->Initialize();
 			  break;
 			  
@@ -110,6 +114,7 @@ void GameEngine::Update()
       break;
     }
   }
+  return true;
 }
 
 void GameEngine::Draw()
@@ -125,6 +130,8 @@ void GameEngine::Draw()
 
   _ship->Update(_deltaTime);
   _ship->Draw(renderer,_deltaTime);
+
+  //iterates the list and creates one asteroid at time, with a limit of 10
   if(static_cast<int>(_accumulatedTime)%6 >=4)
   {
 	  for(int i = 0; i < 10; i++)
@@ -139,6 +146,8 @@ void GameEngine::Draw()
 	  _accumulatedTime = 0;
   }
   _accumulatedTime+=_deltaTime;
+
+  //iterates the list and updates/draws each asteroid
   for(int i = 0; i < 10; i++)
   {
 	if(_asteroids[i] != nullptr)
@@ -147,7 +156,7 @@ void GameEngine::Draw()
 		_asteroids[i]->Draw(renderer,_deltaTime);
 	}
   }
-
+  //iterates the list and updates/draws each projectile
   for(int i = 0; i < 10; i++)
   {
 	if(_projectiles[i] != nullptr)
@@ -162,6 +171,7 @@ void GameEngine::Draw()
 	}
   }
 
+  //evaluates the position of each asteroid in relation to each projectile
   for(int i = 0; i < 10; i++)
   {
 		if(_asteroids[i] != nullptr)
@@ -183,7 +193,7 @@ void GameEngine::Draw()
 			}
 		}
 	}
-
+  //evaluates the position of each asteroid in relation to the player
   for(int i = 0; i < 10; i++)
   {
 		if(_asteroids[i] != nullptr)

@@ -10,7 +10,8 @@ int main(int argc, char** argv)
 
   while(true)
   {
-    engine->Update();
+    if(!engine->Update())
+		break;
     engine->Draw();
   }
 

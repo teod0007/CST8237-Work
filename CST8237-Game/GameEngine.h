@@ -15,16 +15,45 @@ class Projectile;
 class Player;
 class Asteroid;
 
-
+/**
+* \class GameEngine.h
+* \brief A class that represents a single object that 
+* will controll the game itself.
+* \author Emanuel Teodoro Sousa
+* \date January 20, 2015
+*/
 class GameEngine
 {
 public:
+/**
+* \fn GameEngine* GameEngine::CreateInstance()
+* \brief If our instance is not created already, this
+* function will be called to create it.
+*/
   static GameEngine* CreateInstance();
-
+/**
+* \fn void GameEngine::Initialize()
+* \brief A function that we値l use as to define how our 
+* object is initialized.
+*/
   void Initialize();
+/**
+* \fn void GameEngine::Shutdown()
+* \brief A virtual function that we値l use as to define how our 
+* object is shutdown.
+*/
   void Shutdown();
-
-  void Update();
+/**
+* \fn void GameEngine::Update()
+* \brief A virtual function that we値l use as to define how our 
+* object is updated.
+*/
+  bool Update();
+/**
+* \fn bool GameEngine::Draw()
+* \brief A virtual function that we値l use as to define how our 
+* object is draw on the screen.
+*/
   void Draw();
 
   ~GameEngine();
