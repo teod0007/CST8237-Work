@@ -13,14 +13,14 @@ float MathUtils::ToRadians(float degrees)
   return degrees * degreesToRadians;
 }
 
-Vector2 MathUtils::Rotate(Vector2 &rotated,Vector3 &origin, Direction d)
+Vector2 MathUtils::Rotate(Vector2 &rotated,Vector3 &origin, Direction d,float dt)
 {
-	float degrees = -5;
+	float degrees = -60;
 	if(d == RIGHT) degrees *= -1;
 	origin.z += degrees;
-	if(origin.z < 0) origin.z = 355;
-	if(origin.z > 360) origin.z = 5;
-	float radians = ToRadians(degrees);
+	if(origin.z < 0) origin.z = 360 + degrees;
+	if(origin.z > 360) origin.z = -degrees;
+	float radians = ToRadians(degrees*dt);
 	Vector2 actual = { rotated.x,rotated.y};
 	
 	actual.x-=origin.x;

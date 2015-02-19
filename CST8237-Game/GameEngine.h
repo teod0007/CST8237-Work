@@ -14,6 +14,9 @@ struct SDL_Window;
 class Projectile;
 class Player;
 class Asteroid;
+class Wall;
+struct SDL_Texture;
+
 
 /**
 * \class GameEngine.h
@@ -67,9 +70,11 @@ protected:
   SDL_Renderer *renderer;
 
   // Using the default member-wise initializer for our new struct.
-  Player *_ship;
-  Asteroid **_asteroids;
+  Player *_player1,*_player2;
+  Wall **_walls;
   Projectile **_projectiles;
+  SDL_Texture *_texture;
   float _oldTime, _currentTime, _deltaTime, _accumulatedTime;
-  int _lives,_points;
+  int _lives,_points1,_points2;
+  bool _moveUp1,_moveDown1,_rotateLeft1,_rotateRight1,_shoot1,_moveUp2,_moveDown2,_rotateLeft2,_rotateRight2,_shoot2;
 };

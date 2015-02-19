@@ -21,7 +21,7 @@ Projectile::Projectile(Transform &playerPosition):GameObject(){
 
 void Projectile::Initialize()
 {
-	_maxTime = 0.0f;
+	_maxBounces = 3;
 	float radians = atan2f(_transform.rotation.x,_transform.rotation.y);
 	_yVelocity = 100.0f * cos(radians);
 	_xVelocity = 100.0f * sin(radians); 
@@ -37,7 +37,7 @@ void Projectile::Update(float dt)
    yMov += (_yVelocity * delta);
    _transform.position.x-=(xMov);
    _transform.position.y-=(yMov);
-   _maxTime += delta;
+   //_maxTime += delta;
 
    if(_transform.position.x < 0)
 		_transform.position.x += 640;
@@ -58,12 +58,22 @@ void Projectile::Draw(SDL_Renderer *renderer, float dt)
 	SDL_RenderDrawPoint(renderer,_transform.position.x,_transform.position.y);
 }
 
-float Projectile::GetMaxTime()
-{
-	return _maxTime;
-}
-
 Vector2& Projectile::GetPosition()
 {
 	return _transform.position;
+}
+
+void Projectile::ReverseY()
+{
+	_yVelocity *= -1;
+}
+
+void Projectile::ReverseX()
+{
+	_xVelocity *= -1;
+}
+
+int& Projectile::GetBounces()
+{
+	return _maxBounces;
 }

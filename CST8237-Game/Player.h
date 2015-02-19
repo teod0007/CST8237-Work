@@ -12,8 +12,9 @@
 class Player: public GameObject
 {
 	Vector2 _pos1,_pos2;
-	float _xVelocity,_yVelocity,_acceleration;
+	float _xVelocity,_yVelocity,_acceleration, _deadTime, _inactiveTime;
 	Acceleration _accDirection;
+	bool _isDead,_isActive;
 public:
 	 
 	 Player();
@@ -51,7 +52,7 @@ public:
 * the direction of turning
 * \param Direction RIGHT or LEFT
 */
-	 void Turn(Direction);
+	 void Turn(Direction, float dt);
 /**
 * \fn Transform& Player::GetTransform()
 * \brief A function that we’ll use to get
@@ -64,4 +65,18 @@ public:
 * the Vector3 component inside _transform.
 */
 	 Vector3& GetPosition();
+
+	 void AddPositionX(float x);
+
+	 void AddPositionY(float y);
+
+	 void SetPosition(float x, float y);
+
+	 void SuspendActions();
+
+	 void DeathRotation();
+
+	 bool IsActive();
+
+	 bool IsDead();
 };

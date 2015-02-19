@@ -29,7 +29,7 @@ struct Vector4
 {
   float x;
   float y;
-  float z;
+  float h;
   float w;
 };
 
@@ -64,7 +64,7 @@ public:
 * \param rotation Axis point
 * \param d Direction of the rotation
 */
-  static Vector2 Rotate(Vector2&,Vector3&, Direction d);
+  static Vector2 Rotate(Vector2&,Vector3&, Direction d,float delta);
 /**
 * \fn float MathUtils::AfanF(float x, float y)
 * \brief A static function that we’ll use to get the arctanget value of a point.

@@ -2,36 +2,34 @@
 #include "GameObject.h"
 
 /**
-* \class Projectile.h
-* \brief A class that represents the object player 
-* in the game.
+* \class Asteroid.h
+* \brief A class that represents the objects of single asteroids in 
+* the game.
 * \author Emanuel Teodoro Sousa
 * \date January 20, 2015
 */
 
-class Projectile: public GameObject
+class Wall: public GameObject
 {
-
-	float _xVelocity,_yVelocity;
-	int _maxBounces;
+	Vector4 origin;
 public:
-	 Projectile();
-	 Projectile(Transform &playerPosition);
+	 
+	 Wall(float x, float y, float h, float w);
 /**
-* \fn void Projectile::Initialize()
+* \fn void Asteroid::Initialize()
 * \brief A function that we値l use as to define how our 
 * object is initialized.
 */
 	 virtual void Initialize();
 /**
-* \fn void Projectile::Update(float dt)
+* \fn void Asteroid::Update(float dt)
 * \brief A virtual function that we値l use as to define how our 
 * object is updated.
 * \param dt The time in fractions of a second since the last pass.
-*/ 
+*/  
 	 virtual void Update(float dt);
 /**
-* \fn void Projectile::Draw(SDL_Renderer *renderer, float dt)
+* \fn void Asteroid::Draw(SDL_Renderer *renderer, float dt)
 * \brief A virtual function that we値l use as to define how our 
 * object is drawn to the screen.
 * \param renderer The SDL renderer used to draw the object.
@@ -39,19 +37,9 @@ public:
 */
 	 virtual void Draw(SDL_Renderer *renderer, float dt);
 /**
-* \fn void Projectile::GetMaxTime()
-* \brief A function that we値l use to get
-* the maxTime of the projectile.
+* \fn Vector4& Wall::GetPosition()
+* \brief A function that we値l use as to return the position
+* of this object on the screen.
 */
-
-/**
-* \fn Vector2& Projectile::GetPosition()
-* \brief A function that we値l use to get
-* the Vector2 component inside _transform.
-*/
-	 Vector2& GetPosition();
-
-	 void ReverseY();
-	 void ReverseX();
-	 int& GetBounces();
+	 Vector4& GetPosition();
 };
