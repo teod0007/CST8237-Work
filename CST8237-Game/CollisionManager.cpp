@@ -44,12 +44,12 @@ bool CollisionManager::EvaluatePlayerWall(Player& player, Wall& wall)
 		{
 			if((player.GetPosition().x - wall.GetPosition().x) < (- player.GetPosition().x + wall.GetPosition().x + wall.GetPosition().w))
 			{
-				player.AddPositionX( -( player.GetTransform().rotation.x - wall.GetPosition().x + 5 ));
+				player.AddPositionX( -( player.GetTransform().rotation.x - wall.GetPosition().x + 0 ));
 				//proj.ReverseX();
 			}
 			else if((player.GetPosition().x - wall.GetPosition().x) > (- player.GetPosition().x + wall.GetPosition().x + wall.GetPosition().w))
 			{
-				player.AddPositionX( +( player.GetTransform().rotation.x - wall.GetPosition().x + 5 ));
+				player.AddPositionX( +( player.GetTransform().rotation.x - wall.GetPosition().x + 0 ));
 				//proj.ReverseX();
 			}
 			
@@ -59,12 +59,12 @@ bool CollisionManager::EvaluatePlayerWall(Player& player, Wall& wall)
 		{
 			if((player.GetPosition().y - wall.GetPosition().y) < (- player.GetPosition().y + wall.GetPosition().y + wall.GetPosition().h))
 			{
-				player.AddPositionY( -( player.GetTransform().rotation.y - wall.GetPosition().y + 5 ));
+				player.AddPositionY( -( player.GetTransform().rotation.y - wall.GetPosition().y + 0 ));
 				//proj.ReverseY();
 			}
 			else if((player.GetPosition().y - wall.GetPosition().y) > (- player.GetPosition().y + wall.GetPosition().y + wall.GetPosition().h))
 			{
-				player.AddPositionY( +( player.GetTransform().rotation.y - wall.GetPosition().y + 5 ));
+				player.AddPositionY( +( player.GetTransform().rotation.y - wall.GetPosition().y + 0 ));
 				//proj.ReverseY();
 			}
 		

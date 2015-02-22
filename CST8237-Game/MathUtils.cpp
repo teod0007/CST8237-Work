@@ -1,13 +1,13 @@
 #include "MathUtils.h"
 #include <math.h>
 
-float MathUtils::ToDegrees(float radians)
+double MathUtils::ToDegrees(float radians)
 {
   float radiansToDegrees = 180.0f / 3.1415926535f;
   return radians * radiansToDegrees;
 }
 
-float MathUtils::ToRadians(float degrees)
+double MathUtils::ToRadians(float degrees)
 {
   float degreesToRadians = 3.1415926535f / 180.0f;
   return degrees * degreesToRadians;
@@ -15,12 +15,12 @@ float MathUtils::ToRadians(float degrees)
 
 Vector2 MathUtils::Rotate(Vector2 &rotated,Vector3 &origin, Direction d,float dt)
 {
-	float degrees = -60;
+	double degrees = -60*dt;
 	if(d == RIGHT) degrees *= -1;
-	origin.z += degrees;
-	if(origin.z < 0) origin.z = 360 + degrees;
-	if(origin.z > 360) origin.z = -degrees;
-	float radians = ToRadians(degrees*dt);
+	origin.z += degrees/3;
+	if(origin.z < -180) origin.z = 360 + origin.z;
+	if(origin.z > 180) origin.z = origin.z - 360;
+	double radians = ToRadians(degrees);
 	Vector2 actual = { rotated.x,rotated.y};
 	
 	actual.x-=origin.x;

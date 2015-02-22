@@ -13,7 +13,7 @@ void Player::Initialize()
 	//_transform.position.y = 100.0f;
 	_transform.rotation.x = _transform.position.x;
 	_transform.rotation.y = _transform.position.y + 5;
-	_transform.rotation.z = 90;
+	_transform.rotation.z = 0;
 	_pos1.x = _transform.position.x - 10;
 	_pos1.y = _transform.position.y + 10;
 	_pos2.x = _transform.position.x + 10;;
@@ -28,6 +28,7 @@ void Player::Initialize()
 	_inactiveTime = 0;
 	_isDead = false;
 	_isActive = true;
+	_texture = nullptr;
 }
 
 void Player::Update(float dt)
@@ -37,6 +38,7 @@ void Player::Update(float dt)
    float radians;
    Vector2 actual = {_transform.position.x-_transform.rotation.x,_transform.position.y-_transform.rotation.y};
    radians = MathUtils::AtanF(actual.x,actual.y);
+
    if(!_isDead)
    {
 	   
@@ -61,6 +63,7 @@ void Player::Update(float dt)
 
 		   xMov += (_xVelocity * delta);
 		   yMov += (_yVelocity * delta);
+		   /*
 		   _transform.position.x -= (xMov);
 		   _transform.position.y -= (yMov);
 		   _pos1.x-=(xMov);
@@ -69,34 +72,42 @@ void Player::Update(float dt)
 		   _pos2.y-=(yMov);
 		   _transform.rotation.x -= (xMov);
 		   _transform.rotation.y -= (yMov);
+		   */
+		   AddPositionX(-xMov);
+		   AddPositionY(-yMov);
 
 		   if(_transform.rotation.x < 0){
 		
-				_transform.rotation.x += 640;
+				/*_transform.rotation.x += 640;
 				_transform.position.x += 640;
 				_pos1.x += 640;
 				_pos2.x += 640;
+				*/
+			   AddPositionX(640);
 			}else
 			if(_transform.rotation.x > 640){
 		
-				_transform.rotation.x -= 640;
+				/*_transform.rotation.x -= 640;
 				_transform.position.x -= 640;
 				_pos1.x -= 640;
-				_pos2.x -= 640;
+				_pos2.x -= 640;*/
+				AddPositionX(-640);
 			}else
 			if(_transform.rotation.y < 0){
 		
-				_transform.rotation.y += 640;
+				/*_transform.rotation.y += 640;
 				_transform.position.y += 640;
 				_pos1.y += 640;
-				_pos2.y += 640;
+				_pos2.y += 640;*/
+				AddPositionY(640);
 			}else
 			if(_transform.rotation.y > 640){
-		
+				/*
 				_transform.rotation.y -= 640;
 				_transform.position.y -= 640;
 				_pos1.y -= 640;
-				_pos2.y -= 640;
+				_pos2.y -= 640;*/
+				AddPositionY(-640);
 			}
 		
 	}
@@ -125,9 +136,16 @@ void Player::Draw(SDL_Renderer *renderer, float dt)
 {
 	SDL_SetRenderDrawColor(renderer, 0,0,0,0);
 		
-	SDL_RenderDrawLine(renderer,_transform.position.x,_transform.position.y,_pos1.x,_pos1.y);
+	if(_texture == nullptr)
+		_texture = IMG_LoadTexture( renderer, "./tank.png");
+	SDL_Rect textureRect = {_transform.rotation.x-10,_transform.rotation.y-10,20,20};
+	SDL_RenderCopyEx(renderer,_texture,NULL,&textureRect,_transform.rotation.z,NULL,SDL_FLIP_NONE);
+
+	/*SDL_RenderDrawLine(renderer,_transform.position.x,_transform.position.y,_pos1.x,_pos1.y);
 	SDL_RenderDrawLine(renderer,_transform.position.x,_transform.position.y,_pos2.x,_pos2.y);
-	SDL_RenderDrawLine(renderer,_pos1.x,_pos1.y,_pos2.x,_pos2.y);
+	SDL_RenderDrawLine(renderer,_pos1.x,_pos1.y,_pos2.x,_pos2.y);*/
+
+	//SDL_RenderDrawRect(renderer,&textureRect);
 }
 
 void Player::Move(Acceleration a){

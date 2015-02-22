@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "MathUtils.h"
+#include <SDL_image.h>
 
 struct SDL_Renderer;
 
@@ -44,4 +45,5 @@ protected:
 	GameObject(){}
 
   Transform _transform;
+  SDL_Texture* _texture;
 };

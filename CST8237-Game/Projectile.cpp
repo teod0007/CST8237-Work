@@ -12,9 +12,11 @@ Projectile::Projectile():GameObject(){
 }
 
 Projectile::Projectile(Transform &playerPosition):GameObject(){
-
+	
+	_texture = nullptr;
 	_transform.rotation.x = playerPosition.rotation.x-playerPosition.position.x;
 	_transform.rotation.y = playerPosition.rotation.y-playerPosition.position.y;
+	_transform.rotation.z = playerPosition.rotation.z;
 	_transform.position.x = playerPosition.position.x;
 	_transform.position.y = playerPosition.position.y;
 }
@@ -54,8 +56,13 @@ void Projectile::Update(float dt)
 
 void Projectile::Draw(SDL_Renderer *renderer, float dt)
 {
+	if(_texture == nullptr)
+		_texture = IMG_LoadTexture( renderer, "./cannonball.png");
+	SDL_Rect textureRect = {_transform.position.x-2,_transform.position.y-2,4,4};
 	SDL_SetRenderDrawColor(renderer, 0,0,0,0);
-	SDL_RenderDrawPoint(renderer,_transform.position.x,_transform.position.y);
+	SDL_RenderCopyEx(renderer,_texture,NULL,&textureRect,_transform.rotation.z,NULL,SDL_FLIP_NONE);
+	/*SDL_RenderDrawPoint(renderer,_transform.position.x,_transform.position.y);
+	SDL_RenderDrawRect(renderer,&textureRect);*/
 }
 
 Vector2& Projectile::GetPosition()

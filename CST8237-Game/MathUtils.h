@@ -22,7 +22,7 @@ struct Vector3
 {
   float x;
   float y;
-  float z;
+  double z;
 };
 
 struct Vector4
@@ -49,14 +49,14 @@ public:
 * radians
 * \param degrees The value in degrees.
 */
-  static float ToRadians(float degrees);
+  static double ToRadians(float degrees);
 /**
 * \fn void MathUtils::ToDegrees(float radians)
 * \brief A static function that we’ll use to make radians into
 * degrees
 * \param radians The value in radians.
 */
-  static float ToDegrees(float radians);
+  static double ToDegrees(float radians);
 /**
 * \fn Vector2 MathUtils::Rotate(Vector2& rotated,Vector3& rotation, Direction d)
 * \brief A static function that we’ll use to rotate a point around an axis.
