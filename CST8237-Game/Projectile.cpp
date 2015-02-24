@@ -25,8 +25,8 @@ void Projectile::Initialize()
 {
 	_maxBounces = 3;
 	float radians = atan2f(_transform.rotation.x,_transform.rotation.y);
-	_yVelocity = 100.0f * cos(radians);
-	_xVelocity = 100.0f * sin(radians); 
+	_yVelocity = 300.0f * cos(radians);
+	_xVelocity = 300.0f * sin(radians); 
 }
 
 void Projectile::Update(float dt)

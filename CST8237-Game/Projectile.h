@@ -50,8 +50,22 @@ public:
 * the Vector2 component inside _transform.
 */
 	 Vector2& GetPosition();
-
+/**
+* \fn void Projectile::ReverseY()
+* \brief A function that we’ll use to reverse
+* the Y vector direction
+*/
 	 void ReverseY();
+/**
+* \fn void Projectile::ReverseX()
+* \brief A function that we’ll use to reverse
+* the X vector direction
+*/
 	 void ReverseX();
+/**
+* \fn int& Projectile::GetBounces()
+* \brief A function that we’ll use to get
+* and set the number of bounces left a projectile has.
+*/
 	 int& GetBounces();
 };

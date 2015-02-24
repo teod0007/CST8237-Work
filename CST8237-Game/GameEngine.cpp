@@ -184,7 +184,7 @@ bool GameEngine::Update()
 		break;
     }
   }
-
+  //player 1 movement
   if(_moveUp1)
 	  _player1->Move(FORWARD);
   if(_moveDown1)
@@ -204,6 +204,7 @@ bool GameEngine::Update()
 			  break;
 			  
 		  }
+  //player 2 movement
   if(_moveUp2)
 	  _player2->Move(FORWARD);
   if(_moveDown2)
@@ -244,59 +245,42 @@ void GameEngine::Draw()
 
   _player2->Update(_deltaTime);
   _player2->Draw(renderer,_deltaTime);
-  /*
-  //iterates the list and creates one asteroid at time, with a limit of 10
-  if(static_cast<int>(_accumulatedTime)%6 >=4)
-  {
-	  for(int i = 0; i < 10; i++)
-	  {
-		  if(_asteroids[i]== nullptr)
-		  {
-				_asteroids[i] = new Asteroid();
-				_asteroids[i]->Initialize();
-				break;
-		  }
-	  }
-	  _accumulatedTime = 0;
-  }
-  _accumulatedTime+=_deltaTime;
-  */
   
   //iterates the list and updates/draws each wall
-  for(int i = 0; i < 6; i++)
+  for(int wallNumber = 0; wallNumber < 6; wallNumber++)
   {
-	if(_walls[i] != nullptr)
+	if(_walls[wallNumber] != nullptr)
 	{
-		_walls[i]->Update(_deltaTime);
-		_walls[i]->Draw(renderer,_deltaTime);
+		_walls[wallNumber]->Update(_deltaTime);
+		_walls[wallNumber]->Draw(renderer,_deltaTime);
 	}
   }
   
   //iterates the list and updates/draws each projectile
-  for(int i = 0; i < 10; i++)
+  for(int projectileNumber = 0; projectileNumber < 10; projectileNumber++)
   {
-	if(_projectiles[i] != nullptr)
+	if(_projectiles[projectileNumber] != nullptr)
 	{
-		_projectiles[i]->Update(_deltaTime);
-		_projectiles[i]->Draw(renderer,_deltaTime);
-		if(_projectiles[i]->GetBounces()<=0)
+		_projectiles[projectileNumber]->Update(_deltaTime);
+		_projectiles[projectileNumber]->Draw(renderer,_deltaTime);
+		if(_projectiles[projectileNumber]->GetBounces()<=0)
 		{
-			delete _projectiles[i];
-			_projectiles[i]=nullptr;
+			delete _projectiles[projectileNumber];
+			_projectiles[projectileNumber]=nullptr;
 		}
 	}
   }
   
   //evaluates the position of each wall in relation to each projectile
-  for(int i = 0; i < 6; i++)
+  for(int wallNumber = 0; wallNumber < 6; wallNumber++)
   {
-		if(_walls[i] != nullptr)
+		if(_walls[wallNumber] != nullptr)
 		{
-			for(int j = 0; j < 10; j++)
+			for(int projectileNumber = 0; projectileNumber < 10; projectileNumber++)
 			{
-				if(_projectiles[j] != nullptr)
+				if(_projectiles[projectileNumber] != nullptr)
 				{
-					if(CollisionManager::EvaluateWallProjectile(*_walls[i],*_projectiles[j]))
+					if(CollisionManager::EvaluateWallProjectile(*_walls[wallNumber],*_projectiles[projectileNumber]))
 						break;
 				}
 			}
@@ -304,32 +288,33 @@ void GameEngine::Draw()
 	}
 
   //evaluates the position of each wall in relation to each player
-  for(int i = 0; i < 6; i++)
+  for(int wallNumber = 0; wallNumber < 6; wallNumber++)
   {
-		if(_walls[i] != nullptr)
+		if(_walls[wallNumber] != nullptr)
 		{
-			if(CollisionManager::EvaluatePlayerWall(*_player1,*_walls[i]) || CollisionManager::EvaluatePlayerWall(*_player2,*_walls[i]))
+			if(CollisionManager::EvaluatePlayerWall(*_player1,*_walls[wallNumber]) || CollisionManager::EvaluatePlayerWall(*_player2,*_walls[wallNumber]))
 						break;
 		}
   }
   
-  for(int j = 0; j < 10; j++)
+  //evaluates the position of each projectile in relation to each player
+  for(int projectileNumber = 0; projectileNumber < 10; projectileNumber++)
   {
-		if(_projectiles[j] != nullptr)
+		if(_projectiles[projectileNumber] != nullptr)
 		{
-			if(CollisionManager::EvaluatePlayerProjectile(*_player1,*_projectiles[j]))
+			if(CollisionManager::EvaluatePlayerProjectile(*_player1,*_projectiles[projectileNumber]))
 			{
-				delete _projectiles[j];
-				_projectiles[j] = nullptr;
+				delete _projectiles[projectileNumber];
+				_projectiles[projectileNumber] = nullptr;
 				_player1->DeathRotation();
 				_player2->SuspendActions();
 				_points2++;
 				break;
 			}
-			if(CollisionManager::EvaluatePlayerProjectile(*_player2,*_projectiles[j]))
+			if(CollisionManager::EvaluatePlayerProjectile(*_player2,*_projectiles[projectileNumber]))
 			{
-				delete _projectiles[j];
-				_projectiles[j] = nullptr;
+				delete _projectiles[projectileNumber];
+				_projectiles[projectileNumber] = nullptr;
 				_player2->DeathRotation();
 				_player1->SuspendActions();
 				_points1++;
@@ -338,63 +323,14 @@ void GameEngine::Draw()
 		}
   }
 
+  //evaluates the position of the players with each other
   if(CollisionManager::EvaluatePlayerPlayer(*_player1,*_player2))
 	  ;
-  //evaluates the position of each asteroid in relation to the player
-  /*
-  for(int i = 0; i < 10; i++)
-  {
-		if(_asteroids[i] != nullptr)
-		{
-			if(static_cast<int>(_ship->GetPosition().x-_asteroids[i]->GetPosition().x)<=9 && static_cast<int>(_ship->GetPosition().x-_asteroids[i]->GetPosition().x)>=-9 && static_cast<int>(+_ship->GetPosition().y-_asteroids[i]->GetPosition().y)<=9 && static_cast<int>(+_ship->GetPosition().y-_asteroids[i]->GetPosition().y)>=-9)
-					{
-						if(_lives == 0)
-						{
-							delete _ship;
-							for(int j = 0; j < 10; j++)
-							{
-								delete _asteroids[j];
-								_asteroids[j] = nullptr;
-							
-							}
-							_ship = new Player(); 
-							_ship->Initialize();
-							_lives = 3;
-							_points = 0;
-							break;
-						}else
-						{
-							delete _asteroids[i];
-							_asteroids[i] = nullptr;
-							_lives--;
-							break;
-						}
-					}
-		}
-  }
-  */
+
+
  std::string title = "Awesome Game ---- Score :: P1 - "+std::to_string (_points1) + " / P2 - "+std::to_string (_points2);
 
   SDL_SetWindowTitle(window,title.c_str());
-  // Draw the point.
-  //SDL_RenderDrawPoint(renderer, posX, posY);
 
-  /*static float rotationDegrees = 10.0f;
-  rotationDegrees += (rotationSpeed * deltaTime);
-  rotationDegrees += (rotationDegrees >= 360.0f ? -360.0f : 0);
-
-  float rotationRadians = MathUtils::ToRadians(rotationDegrees);
-
-  Vector2 rotatedOffset =
-  {
-    endPointOffset.x * cosf(rotationRadians) + endPointOffset.y * sinf(rotationRadians),
-    endPointOffset.x * sinf(rotationRadians) - endPointOffset.y * cosf(rotationRadians)
-  };
-
-  Vector2 transformedEndPoint = { pos.x + rotatedOffset.x, pos.y + rotatedOffset.y };
-
-  SDL_RenderDrawLine(renderer, pos.x, pos.y, transformedEndPoint.x, transformedEndPoint.y);
-  */
-  // Present what is in our renderer to our window.
   SDL_RenderPresent(renderer);
 }

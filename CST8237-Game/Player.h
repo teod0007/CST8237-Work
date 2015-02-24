@@ -65,18 +65,46 @@ public:
 * the Vector3 component inside _transform.
 */
 	 Vector3& GetPosition();
-
+/**
+* \fn void Player::AddPositionX()
+* \brief A function that we値l use to update
+* the general position X of player.
+*/
 	 void AddPositionX(float x);
-
+/**
+* \fn void Player::AddPositionY()
+* \brief A function that we値l use to update
+* the general position Y of player.
+*/
 	 void AddPositionY(float y);
-
+/**
+* \fn void Player::SetPosition()
+* \brief A function that we値l use to set
+* the general position X,Y of player.
+*/
 	 void SetPosition(float x, float y);
-
+/**
+* \fn void Player::SuspendActions()
+* \brief A function that we値l use to suspend
+* the relevant actions.
+*/
 	 void SuspendActions();
-
+/**
+* \fn void Player::DeathRotation()
+* \brief A function that we値l use to activate
+* the death rotation animation.
+*/
 	 void DeathRotation();
-
+/**
+* \fn void Player::IsActive()
+* \brief A function that we値l use to get
+* the present active state of the player
+*/
 	 bool IsActive();
-
+/**
+* \fn void Player::IsDead()
+* \brief A function that we値l use to get
+* the present death state of the player
+*/
 	 bool IsDead();
 };
